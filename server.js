@@ -3,7 +3,7 @@ const AWS = require("aws-sdk");
 const fs = require("fs");
 
 //let job_finished = false;
-let job_name = 'test15';
+let job_name = 'test20';
 let text_url = '';
 const minute = 0.5;
 const the_interval = minute * 60 * 1000;
@@ -69,20 +69,18 @@ const server = http.createServer((req, res) => {
 	if (req.url == '/process_audio_file_synchronously') {
 		if (req.method == 'POST') {
 			console.log('Entered post');
+			//collect the url 
 			let data = [];
 			req.on('data', chunk => {data.push(chunk)});
 			req.on('end', () => {
 				console.log('Data received');
 				const body = JSON.parse(data);
 				const media_url = body.url;
-				const job_name = 'test11';
 				startJob(media_url);
 				console.log('job started');
 				const myTimer = setInterval(() => {
 					listJob(myTimer, res);
 				}, the_interval);
-				//getJob();
-				//res.end(text_url);
 			});
 		}
 
@@ -100,7 +98,7 @@ const server = http.createServer((req, res) => {
 	}
 
 	else if (req.url == '/process_streamed_audio') {
-		//process streaming here
+		//process streaming here, go to the url for the static website
 	    res.end(`
 	        <!doctype html>
 	        <html>
